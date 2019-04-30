@@ -1,0 +1,13 @@
+.container {
+    margin: auto;
+    padding: 100px;
+}
+.articles {
+    margin: auto;
+    padding: 100px;
+    text-align: center;
+}
+.image {
+    width: 50%;
+    height: 50%;
+}
