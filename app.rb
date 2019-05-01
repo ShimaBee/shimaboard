@@ -2,21 +2,22 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
 require 'pry'
+require 'sinatra/cookies'
 
 enable :sessions
 
+# DB接続
 connection = PG::connect(
   :host => "localhost", 
   :user => "shimabukuroyuuta", 
   :dbname => "shimaboard", 
   :port => 5432)
 
-def login_check
+def check_login
     redirect '/login' unless session[:user_id]
 end
 
 get '/' do
-  # @res = connection.exec('select * from users')
   erb :index
 end
 
@@ -25,8 +26,8 @@ get '/login' do
 end
 
 get '/logout' do
-    session[:user_id] = ""
-    redirect 'login'
+    session[:user_id] = nil
+    redirect '/login'
 end
 
 post '/login' do
@@ -58,19 +59,18 @@ post '/register' do
 end
 
 get '/timeline' do
-    # login_check
-    @res = connection.exec('select * from posts')
-    erb :timeline
+  @res = connection.exec('select * from posts')
+  erb :timeline
 end
 
 get '/post' do
-    erb :post
+  check_login
+  erb :post
 end
 
 post '/post' do
   title = params['title']
   contents = params['contents']
-  # binding.pry
   FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
   connection.exec('insert into posts(title, contents, image) values($1, $2, $3)', [title, contents , params[:image][:filename]])
   redirect '/timeline'
