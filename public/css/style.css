@@ -22,5 +22,15 @@
 .top { 
     margin: auto;
     padding: 100px;
-    text-align: center
+    text-align: center;
+}
+.post_btn {
+    position: fixed;
+    top:80vh;
+    right: 5vw;
+}
+.post_wrapper {
+    margin: 10vh 10vw ;
+    padding: 10px;
+    border: solid 1px black;
 }

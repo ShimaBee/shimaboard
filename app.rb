@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
+require 'pry'
 
 enable :sessions
 
@@ -15,6 +16,7 @@ def login_check
 end
 
 get '/' do
+  # @res = connection.exec('select * from users')
   erb :index
 end
 
@@ -22,7 +24,7 @@ get '/login' do
     erb :login
 end
 
-get 'logout' do
+get '/logout' do
     session[:user_id] = ""
     redirect 'login'
 end
@@ -30,7 +32,7 @@ end
 post '/login' do
   name = params['name']
   password = params['password']
-  connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
+  res = connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
   if res
     session[:user_id] = res['id']
     redirect '/'
@@ -57,13 +59,19 @@ end
 
 get '/timeline' do
     # login_check
-    @res = connection.exec('select * from users')
-    @res.each do |user|
-        p user['name']
-    end
+    @res = connection.exec('select * from posts')
     erb :timeline
 end
 
 get '/post' do
     erb :post
+end
+
+post '/post' do
+  title = params['title']
+  contents = params['contents']
+  # binding.pry
+  FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
+  connection.exec('insert into posts(title, contents, image) values($1, $2, $3)', [title, contents , params[:image][:filename]])
+  redirect '/timeline'
 end
