@@ -1,6 +1,6 @@
 <div class="plofile_wrapper">
 <img class="plofile_image" src="./images/main2.jpg" alt="">
-<h1>oooさん</h1>
+<h1><%= @user_name['name']%>さん</h1>
 </div>
 
 <% @res.each do |post|%>
@@ -8,5 +8,7 @@
 <p>title: <%= post['title']%></p>
 <p>contents: <%= post['contents']%></p>
 <img src="./images/<%= post['image']%>" alt="">
+<a class="waves-effect waves-light btn" href="/delete/<%= post['id']%>">削除</a>
+<a class="waves-effect waves-light btn" href="/edit/<%= post['id']%>">編集</a>
 </div>
 <% end%>

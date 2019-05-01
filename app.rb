@@ -69,16 +69,34 @@ get '/post' do
 end
 
 post '/post' do
+  user_id = session[:user_id]
   title = params['title']
   contents = params['contents']
   FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
-  connection.exec('insert into posts(title, contents, image) values($1, $2, $3)', [title, contents , params[:image][:filename]])
+  connection.exec('insert into posts(title, contents, user_id, image) values($1, $2, $3, $4)', [title, contents ,user_id, params[:image][:filename]])
   redirect '/timeline'
 end
 
 get '/mypage' do
   check_login
   user_id = session[:user_id]
+  @user_name = connection.exec('select name from users where id = $1',[user_id]).first
   @res = connection.exec('select * from posts where user_id = $1',[user_id])
   erb :mypage
+end
+
+get '/delete/:id' do
+  check_login
+  connection.exec('delete from posts where id = $1',[params[:id]])
+  redirect '/mypage'
+end
+
+get '/edit/:id' do
+  check_login
+  @res = connection.exec('select * from posts where id = $1',[params[:id]]).first
+  erb :edit
+end
+
+post '/edit' do
+  redirect '/mypage'
 end
