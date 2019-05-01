@@ -1,8 +1,8 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
-require 'pry'
 require 'sinatra/cookies'
+require 'pry'
 
 enable :sessions
 
@@ -36,7 +36,7 @@ post '/login' do
   res = connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
   if res
     session[:user_id] = res['id']
-    redirect '/'
+    redirect '/timeline'
   else
     redirect '/login'
   end
@@ -74,4 +74,11 @@ post '/post' do
   FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
   connection.exec('insert into posts(title, contents, image) values($1, $2, $3)', [title, contents , params[:image][:filename]])
   redirect '/timeline'
+end
+
+get '/mypage' do
+  check_login
+  user_id = session[:user_id]
+  @res = connection.exec('select * from posts where user_id = $1',[user_id])
+  erb :mypage
 end

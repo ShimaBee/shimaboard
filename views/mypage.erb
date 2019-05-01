@@ -1,0 +1,12 @@
+<div class="plofile_wrapper">
+<img class="plofile_image" src="./images/main2.jpg" alt="">
+<h1>oooさん</h1>
+</div>
+
+<% @res.each do |post|%>
+<div class="post_wrapper">
+<p>title: <%= post['title']%></p>
+<p>contents: <%= post['contents']%></p>
+<img src="./images/<%= post['image']%>" alt="">
+</div>
+<% end%>
