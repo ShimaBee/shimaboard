@@ -11,3 +11,16 @@
     width: 50%;
     height: 50%;
 }
+.submit {
+    text-align: center;
+    margin-top: 50px;
+}
+.form_wrapper {
+    margin: 50px 0;
+}
+
+.top { 
+    margin: auto;
+    padding: 100px;
+    text-align: center
+}

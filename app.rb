@@ -15,15 +15,16 @@ def login_check
 end
 
 get '/' do
-  @res = connection.exec('select * from users')
-  @res.each do |user|
-    p user['name']
-  end
   erb :index
 end
 
 get '/login' do
     erb :login
+end
+
+get 'logout' do
+    session[:user_id] = ""
+    redirect 'login'
 end
 
 post '/login' do
@@ -32,8 +33,6 @@ post '/login' do
   connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
   if res
     session[:user_id] = res['id']
-    session[:name] = res['name']
-    session[:password] = res['password']
     redirect '/'
   else
     redirect '/login'
@@ -54,4 +53,17 @@ post '/register' do
     connection.exec("insert into users (name, password) values($1, $2)",[name, password])
     redirect '/'
   end
+end
+
+get '/timeline' do
+    # login_check
+    @res = connection.exec('select * from users')
+    @res.each do |user|
+        p user['name']
+    end
+    erb :timeline
+end
+
+get '/post' do
+    erb :post
 end

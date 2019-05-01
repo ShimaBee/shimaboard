@@ -1,27 +1,25 @@
 <div class="container">
-
 <h1>ログイン</h1>
 
 <div class="row">
-  <form class="col s12" action="/login" method="post">
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="name" id="name" type="text" class="validate" required>
-        <label for="name">Name</label>
-      </div>
+<form action="/login" method="post">
+    <div class="input-field col s6">
+      <input id="first_name2" type="text" class="validate">
+      <label class="active" for="first_name2">Name</label>
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
-        <input name="password" id="password" type="password" class="validate" required>
-        <label for="password">Password</label>
-      </div>
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Password</label>
+        </div>
     </div>
-    <button class="btn waves-effect waves-light #4caf50 green" type="submit">Submit
+
+      <div class="submit">
+      <button class="btn waves-effect waves-light #4caf50 green" type="submit" name="action">Submit
       <i class="material-icons right">send</i>
-    </button>
-  </form>
-</div>
-
-<!--  <a class="waves-effect waves-light btn" href="/register"><i class="material-icons right">cloud</i>新規登録</a>-->
+       </button>
+    </div>
+</form>
+  </div>
 </div>
