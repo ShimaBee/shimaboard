@@ -1,7 +1,7 @@
 # shimaboard
 simple board app by sinatra
 
-## gem install
+## gem
 ```$ gem install sinatra sinatra-contrib pg```
 
 ## create db
