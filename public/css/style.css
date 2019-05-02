@@ -44,3 +44,11 @@
     border-radius: 50%;
     margin-top: 100px;
 }
+.app_description {
+    font-size: 20px;
+}
+.logout {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}

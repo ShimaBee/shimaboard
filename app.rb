@@ -87,13 +87,13 @@ end
 
 get '/delete/:id' do
   check_login
-  connection.exec('delete from posts where id = $1',[params[:id]])
+  connection.exec('delete from posts where id = $1',[params['id']])
   redirect '/mypage'
 end
 
 get '/edit/:id' do
   check_login
-  @res = connection.exec('select * from posts where id = $1',[params[:id]]).first
+  @res = connection.exec('select * from posts where id = $1',[params['id']]).first
   @post_id = @res['id']
   erb :edit
 end
@@ -103,7 +103,6 @@ post '/edit/:id' do
   contents = params['contents']
   id = params['id']
   FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
-  # binding.pry
   connection.exec('update posts set title = $1, contents = $2, image = $3 where id = $4', [title, contents,params['image']['filename'], id])
   redirect '/mypage'
 end
