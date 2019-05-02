@@ -59,7 +59,7 @@ post '/register' do
 end
 
 get '/timeline' do
-  @res = connection.exec('select * from posts')
+  @res = connection.exec('select * from posts order by id desc')
   erb :timeline
 end
 
@@ -80,7 +80,7 @@ end
 get '/mypage' do
   check_login
   user_id = session[:user_id]
-  @user_name = connection.exec('select name from users where id = $1',[user_id]).first
+  @user_name = connection.exec('select name from users where id = $1 order by id desc',[user_id]).first
   @res = connection.exec('select * from posts where user_id = $1',[user_id])
   erb :mypage
 end
