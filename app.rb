@@ -33,9 +33,9 @@ end
 post '/login' do
   name = params['name']
   password = params['password']
-  res = connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
-  if res
-    session[:user_id] = res['id']
+  id = connection.exec("select id from users where name = $1 and password = $2",[name, password]).first
+  if id
+    session[:user_id] = id['id']
     redirect '/timeline'
   else
     redirect '/login'
@@ -50,11 +50,11 @@ post '/register' do
     name = params['name']
     password = params['password']
     res = connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
-  if res
-    redirect '/register'
-  else
+  unless res
     connection.exec("insert into users (name, password) values($1, $2)",[name, password])
     redirect '/login'
+  else
+    redirect '/register'
   end
 end
 
