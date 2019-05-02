@@ -73,7 +73,7 @@ post '/post' do
   title = params['title']
   contents = params['contents']
   FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
-  connection.exec('insert into posts(title, contents, user_id, image) values($1, $2, $3, $4)', [title, contents ,user_id, params[:image][:filename]])
+  connection.exec('insert into posts(title, contents, user_id, image) values($1, $2, $3, $4)', [title, contents ,user_id, params['image']['filename']])
   redirect '/timeline'
 end
 
