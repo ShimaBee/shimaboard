@@ -54,7 +54,7 @@ post '/register' do
     redirect '/register'
   else
     connection.exec("insert into users (name, password) values($1, $2)",[name, password])
-    redirect '/'
+    redirect '/login'
   end
 end
 
@@ -94,9 +94,16 @@ end
 get '/edit/:id' do
   check_login
   @res = connection.exec('select * from posts where id = $1',[params[:id]]).first
+  @post_id = @res['id']
   erb :edit
 end
 
-post '/edit' do
+post '/edit/:id' do
+  title = params['title']
+  contents = params['contents']
+  id = params['id']
+  FileUtils.mv(params['image']['tempfile'], "./public/images/#{params['image']['filename']}")
+  # binding.pry
+  connection.exec('update posts set title = $1, contents = $2, image = $3 where id = $4', [title, contents,params['image']['filename'], id])
   redirect '/mypage'
 end
