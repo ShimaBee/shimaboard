@@ -1,10 +1,16 @@
 # shimaboard
 simple board app by sinatra
 
+## 動作環境
+ruby 2.6.2
+sinatra 2.0.5
+sinatra-contrib 2.0.5
+pg 1.1.4
+
 ## gem
 ```$ gem install sinatra sinatra-contrib pg```
 
-## create db
+## DB
 
 DB作成<br>
 ```$ createdb shimaboard```
