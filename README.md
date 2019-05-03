@@ -1,7 +1,7 @@
 # shimaboard
 simple board app by sinatra
 
-## 動作環境
+## versions
 ruby 2.6.2<br>
 sinatra 2.0.5<br>
 sinatra-contrib 2.0.5<br>
