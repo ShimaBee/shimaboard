@@ -22,12 +22,13 @@ get '/' do
 end
 
 get '/login' do
-    erb :login
+  session[:user_id] = nil
+  erb :login
 end
 
 get '/logout' do
-    session[:user_id] = nil
-    redirect '/login'
+  session[:user_id] = nil
+  redirect '/login'
 end
 
 post '/login' do
@@ -47,9 +48,9 @@ get '/register' do
 end
 
 post '/register' do
-    name = params['name']
-    password = params['password']
-    res = connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
+  name = params['name']
+  password = params['password']
+  res = connection.exec("select * from users where name = $1 and password = $2",[name, password]).first
   unless res
     connection.exec("insert into users (name, password) values($1, $2)",[name, password])
     redirect '/login'
