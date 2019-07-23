@@ -16,7 +16,7 @@ DB作成<br>
 ```$ createdb shimaboard```
 
 DBに入る<br>
-```$ psql shimaboad```
+```$ psql shimaborad```
 
 posts tableを作る<br>
 ```create table posts (id serial primary key, title varchar(255), contents text, image text, user_id integer);```
